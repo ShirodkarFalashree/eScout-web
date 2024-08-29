@@ -1,20 +1,29 @@
-import React from 'react'
+import {React,useState} from 'react'
 import { BackgroundGradientAnimation } from '../../components/Background'
 import { PlaceholdersAndVanishInput } from '../../components/InputBox'
 const SearchPage = () => {
+
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleInputClick = () => {
+    // Set `isClicked` to true when the input is clicked
+    setIsClicked(true);
+  };
   return (
     <BackgroundGradientAnimation>
   
-  <div className=" outer-div bg-white bg-opacity-0 bg-blur-lg p-4 rounded-3xl top shadow-lg h-64 justify-end absolute -bottom-48 left-1/2 transform -translate-x-1/2 mb-8 z-10 ">
-    <div className="search-container flex items-center justify-end relative w-[80vw] max-w-md mx-auto">
-      <PlaceholdersAndVanishInput 
-        placeholders={["Type here to search", "Search here.."]} 
-        onChange={(e) => console.log(e.target.value)}
-        onSubmit={() => console.log("Submitted")}
-      />
+  <div
+      className={`outer-div bg-white bg-opacity-${isClicked ? '15' : '0'} bg-blur-xl p-4 pt-8 rounded-3xl w-[430px] shadow-lg h-[75vh] justify-end absolute left-1/2 transform -translate-x-1/2 mb-5 z-10 transition-all duration-500 ${isClicked ? '-bottom-[160px] h-[80vh] ' : '-bottom-[600px] '}`}
+    >
+      <div className="search-container flex  items-center justify-end relative w-[90vw] max-w-2xl mx-auto">
+        <PlaceholdersAndVanishInput 
+          placeholders={["Type here to search", "Search here.."]} 
+          onChange={(e) => console.log(e.target.value)}
+          onSubmit={() => console.log("Submitted")}
+          onClick={handleInputClick} // Pass the click handler to the search box
+        />
+      </div>
     </div>
-
-</div>
 
     </BackgroundGradientAnimation>
   )

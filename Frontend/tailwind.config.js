@@ -6,15 +6,47 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {
-        bg1: 'rgb(108, 0, 162)',
-        bg2: 'rgb(0, 17, 82)',
-        color1: 'rgb(18, 113, 255)',
-        color2: 'rgb(221, 74, 255)',
-        color3: 'rgb(100, 220, 255)',
-        color4: 'rgb(200, 50, 50)',
-        color5: 'rgb(180, 180, 50)',
-        colorInteractive: 'rgb(140, 100, 255)',
+      animation: {
+        first: "moveVertical 30s ease infinite",
+        second: "moveInCircle 20s reverse infinite",
+        third: "moveInCircle 40s linear infinite",
+        fourth: "moveHorizontal 40s ease infinite",
+        fifth: "moveInCircle 20s ease infinite",
+      },
+      keyframes: {
+        moveHorizontal: {
+          "0%": {
+            transform: "translateX(-50%) translateY(-10%)",
+          },
+          "50%": {
+            transform: "translateX(50%) translateY(10%)",
+          },
+          "100%": {
+            transform: "translateX(-50%) translateY(-10%)",
+          },
+        },
+        moveInCircle: {
+          "0%": {
+            transform: "rotate(0deg)",
+          },
+          "50%": {
+            transform: "rotate(180deg)",
+          },
+          "100%": {
+            transform: "rotate(360deg)",
+          },
+        },
+        moveVertical: {
+          "0%": {
+            transform: "translateY(-50%)",
+          },
+          "50%": {
+            transform: "translateY(50%)",
+          },
+          "100%": {
+            transform: "translateY(-50%)",
+          },
+        },
       },
     },
   },

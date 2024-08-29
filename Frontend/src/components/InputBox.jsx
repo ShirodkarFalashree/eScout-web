@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 export function PlaceholdersAndVanishInput({
-  placeholders=["Search here"],
+  placeholders=[],
   onChange,
   onSubmit
 }) {

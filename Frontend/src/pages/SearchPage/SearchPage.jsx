@@ -11,11 +11,11 @@ const SearchPage = () => {
     // Set `isClicked` to true when the input is clicked
     setIsClicked(true);
   };
-
   const handleSubmit = () => {
-    navigate("/crawling");
+    setTimeout(() => {
+      navigate("/crawling");
+    }, 500); // 500 ms delay before navigation
   };
-
   return (
     <BackgroundGradientAnimation>
       <div

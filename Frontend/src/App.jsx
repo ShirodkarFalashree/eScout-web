@@ -1,18 +1,9 @@
-import { useState } from 'react';
-import Sidebar from './components/sidebar/Sidebar';
-import Main from './components/main/Main';
 
 function App() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
 
   return (
-    <div className="flex min-h-screen">
-      <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
-      <Main toggleSidebar={toggleSidebar} />
+    <div className="">
+      <p className="bg-red-500">app.jsx</p>
     </div>
   );
 }

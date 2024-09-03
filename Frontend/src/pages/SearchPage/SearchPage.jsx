@@ -67,7 +67,7 @@ const SearchPage = () => {
   return (
     <BackgroundGradientAnimation>
       <div
-        className={`outer-div ${isClicked ? 'bg-opacity-25' : 'bg-opacity-0'} bg-white bg-blur-xl p-4 pt-8 rounded-3xl w-[430px] shadow-lg ${isClicked ? 'h-[80vh] -bottom-[100px]' : 'h-[80vh] -bottom-[400px]'} justify-end absolute left-1/2 transform -translate-x-1/2 mb-5 z-10 transition-all duration-500`}
+        className={`outer-div ${isClicked ? 'bg-opacity-25' : 'bg-opacity-0'} bg-white bg-blur-xl p-4 pt-8 rounded-3xl w-[430px] shadow-lg ${isClicked ? 'h-[90vh] -bottom-[100px]' : 'h-[80vh] -bottom-[500px]'} justify-end absolute left-1/2 transform -translate-x-1/2 mb-5 z-10 transition-all duration-500`}
       >
 
         <div className="search-container flex items-center justify-end relative w-[90vw] max-w-2xl mx-auto">

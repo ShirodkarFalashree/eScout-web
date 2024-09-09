@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { BackgroundGradientAnimation } from '../../components/Background';
-import { PlaceholdersAndVanishInput } from '../../components/InputBox';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { BackgroundGradientAnimation } from "../../components/Background";
+import { PlaceholdersAndVanishInput } from "../../components/InputBox";
+import { useNavigate } from "react-router-dom";
 import { PiBookmarkSimpleBold } from "react-icons/pi";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 const SearchPage = () => {
   const [isClicked, setIsClicked] = useState(false);
   const navigate = useNavigate();
@@ -19,10 +19,13 @@ const SearchPage = () => {
   };
   return (
     <BackgroundGradientAnimation>
-     <div
-  className={`outer-div ${isClicked ? 'h-[calc(80vh)] -bottom-[calc(20vh)]' : 'h-[calc(81vh)] -bottom-[calc(60vh)]'} bg-opacity-0 bg-white bg-blur-xl p-4 pt-8 rounded-3xl w-[calc(110vw-30px)] shadow-lg justify-end absolute left-1/2 transform -translate-x-1/2 mb-5 z-10 transition-all duration-500`}
->
-
+      <div
+        className={`outer-div ${
+          isClicked
+            ? "h-[calc(80vh)] -bottom-[calc(20vh)] bg-opacity-10"
+            : "h-[calc(81vh)] -bottom-[calc(60vh)] bg-opacity-0"
+        }  bg-white bg-blur-xl p-4 pt-8 rounded-3xl w-[calc(110vw-30px)] shadow-lg justify-end absolute left-1/2 transform -translate-x-1/2 mb-5 z-10 transition-all duration-500`}
+      >
         <div className="search-container flex items-center justify-end relative w-[90vw] max-w-2xl mx-auto">
           <PlaceholdersAndVanishInput
             placeholders={["Type here to search", "Search here.."]}
@@ -33,7 +36,6 @@ const SearchPage = () => {
         </div>
         <div className="relative -bottom-[430px] left-[320px]">
           <Link to="/saved">
-
             <div className="bg-white text-black text-3xl w-16 h-16 flex items-center justify-center rounded-full">
               <PiBookmarkSimpleBold />
             </div>

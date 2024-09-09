@@ -34,7 +34,7 @@ const SearchPage = () => {
             onClick={handleInputClick} // Pass the click handler to the search box
           />
         </div>
-        <div className="relative -bottom-[430px] left-[320px]">
+        <div className="relative -bottom-[100px] left-[320px]">
           <Link to="/saved">
             <div className="bg-white text-black text-3xl w-16 h-16 flex items-center justify-center rounded-full">
               <PiBookmarkSimpleBold />

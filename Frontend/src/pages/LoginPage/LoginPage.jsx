@@ -4,7 +4,7 @@ import { BackgroundGradientAnimation } from '../../components/Background';
 const LoginPage = () => {
   return (
     <BackgroundGradientAnimation>
-      <div className='flex justify-center items-center relative top-56'>
+      <div className='flex justify-center items-center relative top-56 z-50'>
         <div className="bg-white bg-opacity-20 backdrop-blur-md p-8 rounded-lg shadow-lg w-full max-w-sm">
           <h2 className="text-2xl font-bold mb-6 text-center text-white">Login</h2>
           <form className="space-y-4">
@@ -14,7 +14,7 @@ const LoginPage = () => {
                 id="email"
                 type="email"
                 placeholder="Enter your email"
-                className="mt-1 w-full p-3 rounded-md border border-gray-300 bg-transparent text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="mt-1 w-full p-3 rounded-md border border-gray-300 bg-transparent text-white placeholder-white focus:outline-none" // Removed focus:ring
               />
             </div>
             <div>
@@ -23,12 +23,12 @@ const LoginPage = () => {
                 id="password"
                 type="password"
                 placeholder="Enter your password"
-                className="mt-1 w-full p-3 rounded-md border border-gray-300 bg-transparent text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="mt-1 w-full p-3 rounded-md border border-gray-300 bg-transparent text-white placeholder-white focus:outline-none" // Removed focus:ring
               />
             </div>
             <button
               type="submit"
-              className="w-full py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 transition duration-300"
+              className="w-full py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md shadow-md focus:outline-none transition duration-300"
             >
               Login
             </button>

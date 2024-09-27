@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 
+// Schema for search history
 const historySchema = new mongoose.Schema({
     query: {
         type: String,
@@ -14,6 +14,7 @@ const historySchema = new mongoose.Schema({
     }]
 }, { timestamps: true });
 
+// Main user schema
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -45,18 +46,10 @@ userSchema.pre('save', async function(next) {
     this.password = await bcrypt.hash(this.password, 10);
 });
 
-// Sign JWT and return
-userSchema.methods.getSignedJwtToken = function() {
-    return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRE
-    });
-};
-
-// Match user entered password to hashed password in database
+// Method to compare the entered password with the hashed password in the database
 userSchema.methods.matchPassword = async function(enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 };
 
 const User = mongoose.model('User', userSchema);
-
-module.exports = User;
+export default User;

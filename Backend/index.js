@@ -1,15 +1,16 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const connectDB = require('./config/db');
-const authRoutes = require('./routes/authRoutes');
-const historyRoutes = require('./routes/historyRoutes');
-const cookieParser = require('cookie-parser');
+import express from 'express';
+import dotenv from 'dotenv';
+import connectDB from './config/db.js';
+import authRoutes from './routes/authRoutes.js';
+import historyRoutes from './routes/historyRoutes.js';
+import cookieParser from 'cookie-parser';
+import cors from "cors"
 
 dotenv.config();
 connectDB();
 
 const app = express();
-
+app.use(cors())
 app.use(express.json());
 app.use(cookieParser());  // Middleware to parse cookies
 

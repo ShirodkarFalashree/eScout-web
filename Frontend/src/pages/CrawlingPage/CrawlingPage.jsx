@@ -20,7 +20,7 @@ export default function MultiStepLoaderDemo() {
 
   useEffect(() => {
     // Calculate the total duration of the loader animation
-    const totalDuration = loadingStates.length * 300; // 500 is the duration per step
+    const totalDuration = loadingStates.length * 500; // 500 is the duration per step
 
     // Set a timeout to redirect after the first loop of the loader completes
     const timeoutId = setTimeout(() => {
@@ -39,7 +39,7 @@ export default function MultiStepLoaderDemo() {
         <Loader
           loadingStates={loadingStates}
           loading={loading}
-          duration={300}
+          duration={500}
         />
       </div>
     </BackgroundGradientAnimation>

@@ -1,5 +1,8 @@
 import React from "react";
 import { TextGenerateEffect } from "../../components/text-generate-effect";
+import { Link } from "react-router-dom";
+import { PiBookmarkSimpleBold } from "react-icons/pi";
+
 
 const ResponsePage = () => {
        
@@ -55,17 +58,19 @@ const ResponsePage = () => {
             Benifits of Yoga
           </h1>
         </div>
+        
         <div>
           <TextGenerateEffect words={benefit1} />
           <TextGenerateEffect words={benefit2} />
           <TextGenerateEffect words={benefit3} />
           <TextGenerateEffect words={benefit4} />
           <TextGenerateEffect words={benefit5} />
-
         </div>
+     
       </div>
     </div>
     // </BackgroundGradientAnimation>
+    
   );
 };
 

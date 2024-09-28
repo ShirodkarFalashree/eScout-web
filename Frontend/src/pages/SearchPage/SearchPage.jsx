@@ -4,15 +4,31 @@ import { PlaceholdersAndVanishInput } from "../../components/InputBox";
 import { useNavigate } from "react-router-dom";
 import { PiBookmarkSimpleBold } from "react-icons/pi";
 import { Link } from "react-router-dom";
+import axios from "axios";
 const SearchPage = () => {
   const [isClicked, setIsClicked] = useState(false);
   const navigate = useNavigate();
+  const [loading , setLoading] = useState(false)
 
   const handleInputClick = () => {
     // Set `isClicked` to true when the input is clicked
     setIsClicked(true);
   };
-  const handleSubmit = () => {
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      setLoading(true)
+      const resultText = await axios.post("http://localhost:3000/api/run-crawler")
+      setLoading(false)
+      if(resultText){
+        console.log(resultText.data.importantPoints)
+        // console.log(resultText)
+      }
+    } catch (error) {
+      setLoading(false)
+      console.log(error)
+    }
     setTimeout(() => {
       navigate("/crawling");
     }, 500); // 500 ms delay before navigation
@@ -27,12 +43,21 @@ const SearchPage = () => {
         }  bg-white bg-blur-xl p-4 pt-8 rounded-3xl w-[calc(110vw-30px)] shadow-lg justify-end absolute left-1/2 transform -translate-x-1/2 mb-5 z-10 transition-all duration-500`}
       >
         <div className="search-container flex items-center justify-end relative w-[90vw] max-w-2xl mx-auto">
+         {loading ? (<>
+          <PlaceholdersAndVanishInput
+            placeholders={["Loading please wait"]}
+            onChange={(e) => console.log(e.target.value)}
+            onSubmit={handleSubmit} // Corrected: Pass the function directly
+            onClick={handleInputClick} // Pass the click handler to the search box
+          />
+         </>) : (<>
           <PlaceholdersAndVanishInput
             placeholders={["Type here to search", "Search here.."]}
             onChange={(e) => console.log(e.target.value)}
             onSubmit={handleSubmit} // Corrected: Pass the function directly
             onClick={handleInputClick} // Pass the click handler to the search box
           />
+         </>)}
         </div>
         <div className="relative -bottom-[280px] left-[286px]">
           <Link to="/saved">

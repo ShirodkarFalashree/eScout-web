@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { BackgroundGradientAnimation } from '../../components/Background';
 import { AnimatedList } from '../../components/AnimatedList';
 
@@ -13,12 +14,20 @@ const items = [
 ];
 
 const SavedPage = () => {
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  const handleClick = () => {
+    navigate('/response'); // Redirect to the response page
+  };
+
   return (
-    <BackgroundGradientAnimation>
-      <AnimatedList delay={500} className="m-3 z-50">
-        {items}
-      </AnimatedList>
-    </BackgroundGradientAnimation>
+    <div onClick={handleClick} className="cursor-pointer"> {/* Wrap everything in a div with onClick */}
+      <BackgroundGradientAnimation onClick={handleClick}>
+        <AnimatedList delay={500} className="m-3 z-50" onClick={handleClick}>
+          {items}
+        </AnimatedList>
+      </BackgroundGradientAnimation>
+    </div>
   );
 }
 

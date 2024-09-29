@@ -18,7 +18,7 @@ const SearchPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      setLoading(true)
+      // setLoading(true)
       // const resultText = await axios.post("http://localhost:3000/api/run-crawler")
       const resultText = await axios.post("http://localhost:3000/summarize")
       setLoading(false)

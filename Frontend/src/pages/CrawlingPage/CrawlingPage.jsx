@@ -5,13 +5,13 @@ import { IconSquareRoundedX } from "@tabler/icons-react";
 import { BackgroundGradientAnimation } from "../../components/Background";
 
 const loadingStates = [
-  { text: "Buying a condo" },
-  { text: "Travelling in a flight" },
-  { text: "Meeting Tyler Durden" },
-  { text: "He makes soap" },
-  { text: "We go to a bar" },
-  { text: "Start a fight" },
-  { text: "We like it" },
+  { text: "Verywell Health" },
+  { text: "Yoga Journal" },
+  { text: "Healthline" },
+  { text: "Mayo Clinic" },
+  { text: "WebMD" },
+  { text: "Yoga International" },
+  { text: "Medical News Today" },
 ];
 
 export default function MultiStepLoaderDemo() {

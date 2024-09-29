@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import cheerio from "cheerio";
 import fs from "fs";
-import path from "path";
+import path from "path"
 import { URL } from "url";
 import { load } from 'cheerio';
 

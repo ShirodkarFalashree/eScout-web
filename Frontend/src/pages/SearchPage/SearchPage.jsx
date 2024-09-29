@@ -19,10 +19,12 @@ const SearchPage = () => {
     e.preventDefault()
     try {
       setLoading(true)
-      const resultText = await axios.post("http://localhost:3000/api/run-crawler")
+      // const resultText = await axios.post("http://localhost:3000/api/run-crawler")
+      const resultText = await axios.post("http://localhost:3000/summarize")
       setLoading(false)
       if(resultText){
         console.log(resultText.data.importantPoints)
+        console.log(resultText.data.response)
         // console.log(resultText)
       }
     } catch (error) {

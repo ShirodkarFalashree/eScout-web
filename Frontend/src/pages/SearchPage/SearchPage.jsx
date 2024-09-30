@@ -18,12 +18,13 @@ const SearchPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      // setLoading(true)
+      setLoading(true)
       // const resultText = await axios.post("http://localhost:3000/api/run-crawler")
-      const resultText = await axios.post("http://localhost:3000/summarize")
+      // const resultText = await axios.post("http://localhost:3000/summarize")
+      const resultText = await axios.post("https://escout-web-5f8v.onrender.com/summarize")
       setLoading(false)
       if(resultText){
-        console.log(resultText.data.importantPoints)
+        // console.log(resultText.data.importantPoints)
         console.log(resultText.data.response)
         console.log(resultText)
       }

@@ -25,7 +25,7 @@ const SearchPage = () => {
       if(resultText){
         console.log(resultText.data.importantPoints)
         console.log(resultText.data.response)
-        // console.log(resultText)
+        console.log(resultText)
       }
     } catch (error) {
       setLoading(false)

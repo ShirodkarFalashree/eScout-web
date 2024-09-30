@@ -15,7 +15,7 @@ const ResponsePage = () => {
   
   return (
     // <BackgroundGradientAnimation>
-    <div className=" bg-[#191919]  flex flex-col gap-6 bg-opacity-100 text-white w-full h-full p-6 ">
+    <div className=" bg-[#ffb0b0]  flex flex-col gap-6 bg-opacity-100 text-white w-full h-full p-6 ">
       <div className="bg-white bg-opacity-5 flex justify-center items-center  h-14 w-full rounded-xl text-xl">
         <p>Benifits of yoga</p>
       </div>

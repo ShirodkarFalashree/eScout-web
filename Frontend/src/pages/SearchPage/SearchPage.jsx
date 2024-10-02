@@ -17,24 +17,33 @@ const SearchPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+     // Navigate to the crawling page before starting the API call
+     navigate("/crawling");
+
     try {
+
       setLoading(true)
-      // const resultText = await axios.post("http://localhost:3000/api/run-crawler")
+      const resultText = await axios.post("http://localhost:3000/api/run-crawler")
       // const resultText = await axios.post("http://localhost:3000/summarize")
-      const resultText = await axios.post("https://escout-web-5f8v.onrender.com/summarize")
+      // const resultText = await axios.post("https://escout-web-5f8v.onrender.com/summarize")
       setLoading(false)
+
       if(resultText){
         // console.log(resultText.data.importantPoints)
         console.log(resultText.data.response)
         console.log(resultText)
       }
+
+ // After the data is fetched, navigate to the response page
+ navigate("/response", { state: { data: resultText.data } });
+
     } catch (error) {
       setLoading(false)
       console.log(error)
     }
-    setTimeout(() => {
-      navigate("/crawling");
-    }, 500); // 500 ms delay before navigation
+    // setTimeout(() => {
+    //   navigate("/crawling");
+    // }, 500); // 500 ms delay before navigation
   };
   return (
     <BackgroundGradientAnimation>

@@ -1,0 +1,5 @@
+.custom-toast-container {
+    z-index: 9999; /* Set this to a higher value than other elements */
+
+}
+  

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
+import { useNavigate, useLocation } from "react-router-dom"; // Import useNavigate for redirection
 import { MultiStepLoader as Loader } from "../../components/multi-step-loader";
-import { IconSquareRoundedX } from "@tabler/icons-react";
 import { BackgroundGradientAnimation } from "../../components/Background";
 
 const loadingStates = [
@@ -17,30 +16,48 @@ const loadingStates = [
 export default function MultiStepLoaderDemo() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate(); // Initialize navigate function for redirection
+  const location = useLocation(); // Access the passed data
 
   useEffect(() => {
-    // Calculate the total duration of the loader animation
-    const totalDuration = loadingStates.length * 500; // 500 is the duration per step
+    // This logic assumes that the scraping process is already running
+    // You will pass a signal to indicate when scraping is done
+    const checkScrapingCompletion = async () => {
+      try {
+        // Simulate an API call to check if scraping has finished
+        const result = location.state?.data; // Assuming 'data' is the scraped data passed from the previous page
 
-    // Set a timeout to redirect after the first loop of the loader completes
-    const timeoutId = setTimeout(() => {
-      setLoading(false); // Stop the loading if necessary
-      navigate("/response"); // Redirect to the response page
-    }, totalDuration);
+        if (result) {
+          // Scraping completed, stop the loader
+          setLoading(false);
 
-    // Cleanup the timeout on component unmount
-    return () => clearTimeout(timeoutId);
-  }, [navigate]);
+          // Navigate to the response page and pass the scraped data
+          navigate("/response", { state: { data: result } });
+        }
+      } catch (error) {
+        console.error("Error during scraping:", error);
+      }
+    };
+
+    // Continuously check the status of scraping (adjust polling interval as needed)
+    const intervalId = setInterval(checkScrapingCompletion, 1000); // Check every second
+
+    // Cleanup the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, [navigate, location.state]);
 
   return (
     <BackgroundGradientAnimation>
       <div className="w-full h-[60vh] flex items-center justify-center">
         {/* Core Loader Modal */}
-        <Loader
-          loadingStates={loadingStates}
-          loading={loading}
-          duration={500}
-        />
+        {loading ? (
+          <Loader
+            loadingStates={loadingStates}
+            loading={loading}
+            duration={500}
+          />
+        ) : (
+          <div>Loading Complete. Redirecting...</div> // Optional: add a message while navigating
+        )}
       </div>
     </BackgroundGradientAnimation>
   );

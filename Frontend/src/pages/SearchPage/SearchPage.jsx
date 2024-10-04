@@ -11,7 +11,7 @@ const SearchPage = () => {
   const [loading , setLoading] = useState(false)
 
   const handleInputClick = () => {
-    // Set `isClicked` to true when the input is clicked
+    // Set isClicked to true when the input is clicked
     setIsClicked(true);
   };
 
@@ -23,8 +23,8 @@ const SearchPage = () => {
     try {
 
       setLoading(true)
-      const resultText = await axios.post("http://localhost:3000/api/run-crawler")
-      // const resultText = await axios.post("http://localhost:3000/summarize")
+      // const resultText = await axios.post("http://localhost:3000/api/run-crawler")
+      const resultText = await axios.post("http://localhost:3000/summarize")
       // const resultText = await axios.post("https://escout-web-5f8v.onrender.com/summarize")
       setLoading(false)
 
@@ -95,7 +95,7 @@ export default SearchPage;
 //   const navigate = useNavigate();
 
 //   const handleInputClick = () => {
-//     // Set `isClicked` to true when the input is clicked
+//     // Set isClicked to true when the input is clicked
 //     setIsClicked(true);
 //   };
 //   const handleSubmit = () => {
@@ -106,7 +106,7 @@ export default SearchPage;
 //   return (
 //     <BackgroundGradientAnimation>
 //       <div
-//         className={`outer-div ${isClicked ? 'bg-opacity-25' : 'bg-opacity-0'} bg-white bg-blur-xl p-4 pt-8 rounded-3xl w-[430px] shadow-lg ${isClicked ? 'h-[90vh] -bottom-[100px]' : 'h-[80vh] -bottom-[500px]'} justify-end absolute left-1/2 transform -translate-x-1/2 mb-5 z-10 transition-all duration-500`}
+//         className={outer-div ${isClicked ? 'bg-opacity-25' : 'bg-opacity-0'} bg-white bg-blur-xl p-4 pt-8 rounded-3xl w-[430px] shadow-lg ${isClicked ? 'h-[90vh] -bottom-[100px]' : 'h-[80vh] -bottom-[500px]'} justify-end absolute left-1/2 transform -translate-x-1/2 mb-5 z-10 transition-all duration-500}
 //       >
 //         <div className="search-container flex items-center justify-end relative w-[90vw] max-w-2xl mx-auto">
 //           <PlaceholdersAndVanishInput

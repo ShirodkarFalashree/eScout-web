@@ -23,8 +23,8 @@ const SearchPage = () => {
     try {
 
       setLoading(true)
-      const resultText = await axios.post("http://localhost:3000/api/run-crawler")
-      // const resultText = await axios.post("http://localhost:3000/summarize")
+      // const resultText = await axios.post("http://localhost:3000/api/run-crawler")
+      const resultText = await axios.post("http://localhost:3000/summarize")
       // const resultText = await axios.post("https://escout-web-5f8v.onrender.com/summarize")
       setLoading(false)
 

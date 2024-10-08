@@ -1,4 +1,5 @@
 import User from '../models/userModel.js';
+import generateToken from '../utils/generateToken.js';
 
 // Register User
 export const register = async (req, res) => {
@@ -18,15 +19,22 @@ export const register = async (req, res) => {
             password,
         });
 
-        // Send response after user registration
+        // Generate JWT token
+        const token = generateToken(user._id);
+
+        // Set token in cookie
+        res.cookie('token', token, {
+            httpOnly: true,
+            maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+        });
+
         res.status(201).json({
             success: true,
             message: "User registered successfully",
             user
         });
     } catch (error) {
-        console.error(error);
-      console.log(error.message);
+        console.error(error.message);
         res.status(500).json({ success: false, message: "Server Error" });
     }
 };
@@ -36,15 +44,20 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        // Find user by email and select password
         const user = await User.findOne({ email }).select('+password');
-
-        // Check if user exists and password matches
         if (!user || !(await user.matchPassword(password))) {
             return res.status(401).json({ success: false, message: "Invalid credentials" });
         }
 
-        // Login success response
+        // Generate JWT token
+        const token = generateToken(user._id);
+
+        // Set token in cookie
+        res.cookie('token', token, {
+            httpOnly: true,
+            maxAge: 30 * 24 * 60 * 60 * 1000,
+        });
+
         res.status(200).json({
             success: true,
             message: "Login successful",
@@ -57,7 +70,12 @@ export const login = async (req, res) => {
 
 // Logout User
 export const logout = (req, res) => {
-    // In case of session-based auth, you'd destroy the session here
+    // Clear the cookie
+    res.cookie('token', '', {
+        httpOnly: true,
+        expires: new Date(0), // Set the cookie to expire in the past
+    });
+
     res.status(200).json({
         success: true,
         message: 'Logged out successfully'

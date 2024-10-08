@@ -5,6 +5,7 @@ import authRoutes from './routes/authRoutes.js';
 import historyRoutes from './routes/historyRoutes.js';
 import cookieParser from 'cookie-parser';
 import cors from "cors"
+import jsonwebtoken from 'jsonwebtoken';
 
 dotenv.config();
 connectDB();
@@ -13,6 +14,8 @@ const app = express();
 app.use(cors())
 app.use(express.json());
 app.use(cookieParser());  // Middleware to parse cookies
+
+
 
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/history', historyRoutes);

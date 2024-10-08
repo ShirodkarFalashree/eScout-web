@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { BackgroundGradientAnimation } from "../../components/Background";
-import {} from "../../../../Backend/controllers/authController";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -24,7 +23,8 @@ const RegisterPage = () => {
     try {
       const response = await axios.post(
         "http://localhost:5000/api/v1/auth/register",
-        formData
+        formData,
+        
       );
       if (response.data.success) {
         setSuccess(true);

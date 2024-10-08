@@ -74,7 +74,7 @@ const SearchPage = () => {
         <div className="relative -bottom-[280px] left-[286px]">
           <Link to="/saved">
             <div className="bg-white text-black text-3xl w-16 h-16 flex items-center justify-center rounded-full">
-              <PiBookmarkSimpleBold />
+              <PiBookmarkSimpleBold />~
             </div>
           </Link>
         </div>

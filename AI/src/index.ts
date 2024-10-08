@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import cheerio from "cheerio";
 import fs from "fs";
-import path from "path"
+import path from "path";
 import { URL } from "url";
 import { load } from 'cheerio';
 
@@ -17,37 +17,6 @@ const getUrl = (link: string, baseUrl: string): string => {
   }
 };
 
-const downloadImage = async (url: string, filepath: string) => {
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch image: ${url}`);
-    }
-
-    if (response.body) {
-      const dest = fs.createWriteStream(filepath);
-      response.body.pipe(dest);
-
-      response.body.on("error", (err) => {
-        console.error("Error in response body", err);
-      });
-
-      dest.on("error", (err) => {
-        console.error("Error writing to file", err);
-      });
-
-      dest.on("finish", () => {
-        console.log(`Downloaded ${url} to ${filepath}`);
-      });
-    } else {
-      console.error(`No body found for ${url}`);
-    }
-
-  } catch (error) {
-    console.error("Error occurred while downloading image:", error);
-  }
-};
-
 const appendTextToFile = (text: string, filepath: string) => {
   fs.appendFile(filepath, text, (err) => {
     if (err) {
@@ -58,10 +27,22 @@ const appendTextToFile = (text: string, filepath: string) => {
   });
 };
 
+const saveImageUrlsToJson = (imageUrls: string[], filepath: string) => {
+  const jsonContent = JSON.stringify({ images: imageUrls }, null, 2);
+
+  fs.writeFile(filepath, jsonContent, (err) => {
+    if (err) {
+      console.error("Error writing to JSON file:", err);
+    } else {
+      console.log(`Image URLs saved to ${filepath}`);
+    }
+  });
+};
+
 const crawl = async ({ url }: { url: string }) => {
   try {
     if (seenUrls[url]) return;
-    console.log("crawling", url);
+    console.log("Crawling", url);
     seenUrls[url] = true;
 
     const response = await fetch(url);
@@ -81,13 +62,9 @@ const crawl = async ({ url }: { url: string }) => {
     fs.mkdirSync("output", { recursive: true }); // Create directory if not exists
     appendTextToFile(pText + "\n", path.join("output", "scrapedText.txt"));
 
-    // Download images
-    fs.mkdirSync("images", { recursive: true });
-    await Promise.all(imageUrls.map(async (imageUrl) => {
-      if (imageUrl) {
-        await downloadImage(getUrl(imageUrl, url), path.join("images", path.basename(imageUrl)));
-      }
-    }));
+    // Save image URLs to a JSON file
+    fs.mkdirSync("output", { recursive: true }); // Ensure output directory exists
+    saveImageUrlsToJson(imageUrls, path.join("output", "images.json"));
 
     const { host } = new URL(url);
 

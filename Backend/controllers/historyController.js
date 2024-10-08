@@ -1,7 +1,7 @@
 import User from '../models/userModel.js';
 
 export const addHistory = async (req, res) => {
-    const { query, results } = req.body;
+    const { query, response, images } = req.body; // Accept images in the request body
     const userId = req.user._id;
 
     try {
@@ -11,7 +11,7 @@ export const addHistory = async (req, res) => {
             return res.status(404).json({ success: false, message: "User not found" });
         }
 
-        user.history.push({ query, results });
+        user.history.push({ query, response, images }); // Store images in history
         await user.save();
 
         res.status(201).json({
@@ -20,6 +20,7 @@ export const addHistory = async (req, res) => {
             history: user.history
         });
     } catch (error) {
+        console.error(error); // Log the error for debugging
         res.status(500).json({
             success: false,
             message: "Server Error"
@@ -42,6 +43,7 @@ export const getHistory = async (req, res) => {
             history: user.history
         });
     } catch (error) {
+        console.error(error); // Log the error for debugging
         res.status(500).json({ success: false, message: "Server Error" });
     }
 };

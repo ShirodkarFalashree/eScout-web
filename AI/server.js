@@ -41,7 +41,8 @@ app.post('/summarize', async (req, res) => {
         }
 
         // Step 3: Take only the first 600 characters from the scraped text
-        const prompt = `${data.slice(0, 600)} write all text in bullet points in deep at least 20 neat explained bullet points also give suitable title for it`;
+        // const prompt = `${data.slice(0, 600)} write all text in bullet points in deep at least 20 neat explained bullet points also give suitable title for it`;
+        const prompt = `${data.slice(0, 600)}. Please provide a point-wise explanation where each point starts with an asterisk (*), and do not use any other symbols like hyphens (-) before any point. Format all points and subpoints with only asterisks (*).explaination should be of 2 lines of each sub point `;
 
         // Step 4: Set up generation config and safety settings
         const generationConfig = {

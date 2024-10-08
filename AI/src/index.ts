@@ -81,8 +81,8 @@ const crawl = async ({ url }: { url: string }) => {
 
 crawl({
   // url: "https://www.geeksforgeeks.org/django-tutorial/"
-  url: "https://www.betterhealth.vic.gov.au/yoga-health-benefits"
-  // url: "https://en.wikipedia.org/wiki/Yoga"
+  // url: "https://www.betterhealth.vic.gov.au/yoga-health-benefits"
+  url: "https://en.wikipedia.org/wiki/Yoga"
   // url: "https://cn-info.vercel.app/"
   // url: "https://www.geeksforgeeks.org/what-is-computer-networking/"
 }).catch(error => {

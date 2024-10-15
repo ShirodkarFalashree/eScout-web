@@ -8,7 +8,7 @@ import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/ge
 const app = express();
 const PORT = process.env.PORT || 3000;
 const MODEL_NAME = 'gemini-1.0-pro';
-const API_KEY = 'AIzaSyB7fB6fgWAnIVK4NM7VNsIiBqrUkzp-bsw'; // Replace with your actual API key
+const API_KEY = 'AIzaSyDFXuIjWt3EpBDJujAbRYt8NuN6fdPMn0g'; // Replace with your actual API key
 
 app.use(cors());
 app.use(express.json());
@@ -37,15 +37,15 @@ const getImageUrls = async (filePath) => {
 // Endpoint to scrape and summarize content
 app.post('/summarize', async (req, res) => {
   try {
-    // Run the `start.js` script to scrape and store the text, with a 10-second limit
-    exec('node start.js', { timeout: 10000 }, async (error, stdout, stderr) => {
+    // Run the `start.js` script with a 15-second timeout
+    exec('node start.js', { timeout: 15000 }, async (error, stdout, stderr) => {
       if (error) {
         console.error(`Error executing script: ${error.message}`);
       }
 
-      // Proceed even if there's an error
       const textFilePath = path.join(process.cwd(), 'output', 'scrapedText.txt');
       const imageFilePath = path.join(process.cwd(), 'output', 'images.json');
+      const outputDirPath = path.join(process.cwd(), 'output');
 
       try {
         // Read the scraped text if available
@@ -57,9 +57,8 @@ app.post('/summarize', async (req, res) => {
           data = 'Default scraped content.';
         }
 
-        // Step 3: Take only the first 600 characters from the scraped text
-        // const prompt = `${data.slice(0, 600)} write all text in bullet points in deep at least 20 neat explained bullet points also give suitable title for it`;
-        const prompt = `${data.slice(0, 600)}. Please provide a point-wise explanation where each point starts with an asterisk (*), and do not use any other symbols like hyphens (-) before any point. Format all points and subpoints with only asterisks (*).explaination should be of 2 lines of each sub point `;
+        // Prepare the prompt for the AI
+        const summaryPrompt = `${data.slice(0, 600)}. Please provide a point-wise explanation where each point starts with an asterisk (*), and do not use any other symbols like hyphens (-) before any point. Format all points and subpoints with only asterisks (*). Explanation should be of 2 lines per sub-point.`;
 
         // Set up generation config and safety settings
         const generationConfig = {
@@ -95,14 +94,28 @@ app.post('/summarize', async (req, res) => {
           history: [],
         });
 
-        const result = await chat.sendMessage(prompt);
-        const responseText = result.response.text();
+        const summaryResult = await chat.sendMessage(summaryPrompt);
+        const summaryText = summaryResult.response.text();
+
+        // Generate a short title based on the summary
+        const titlePrompt = `Based on the following summary: "${summaryText}". Provide a short and attractive four-word title that captures the essence.`;
+        const titleResult = await chat.sendMessage(titlePrompt);
+        const titleText = titleResult.response.text();
 
         // Get image URLs from images.json
         const imageUrls = await getImageUrls(imageFilePath);
 
-        // Send the summarized response along with image URLs back to the client
-        res.json({ response: responseText, images: imageUrls });
+        // Send the summarized response, title, and image URLs back to the client
+        res.json({ title: titleText.trim(), response: summaryText, images: imageUrls });
+
+        // Delete the output directory after the response is sent
+        fs.rm(outputDirPath, { recursive: true, force: true }, (delError) => {
+          if (delError) {
+            console.error(`Error deleting output directory: ${delError.message}`);
+          } else {
+            console.log('Output directory deleted successfully.');
+          }
+        });
       } catch (readError) {
         console.error(`Error reading or processing the file: ${readError.message}`);
         res.status(500).json({ error: 'Error reading scraped text or generating summary' });

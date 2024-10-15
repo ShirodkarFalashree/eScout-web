@@ -24,14 +24,17 @@ export const register = async (req, res) => {
 
         // Set token in cookie
         res.cookie('token', token, {
-            httpOnly: true,
+            httpOnly: true, // Prevents JavaScript access
+            secure: false, // Must be false for localhost (use true for HTTPS)
+            sameSite: 'lax', // Allows cookies to be sent in most cases
             maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
         });
 
         res.status(201).json({
             success: true,
             message: "User registered successfully",
-            user
+            user,
+            token, // Send token in the response
         });
     } catch (error) {
         console.error(error.message);
@@ -54,14 +57,17 @@ export const login = async (req, res) => {
 
         // Set token in cookie
         res.cookie('token', token, {
-            httpOnly: true,
-            maxAge: 30 * 24 * 60 * 60 * 1000,
+            httpOnly: true, // Prevents JavaScript access
+            secure: false, // Must be false for localhost (use true for HTTPS)
+            sameSite: 'lax', // Allows cookies to be sent in most cases
+            maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
         });
 
         res.status(200).json({
             success: true,
             message: "Login successful",
-            user
+            user,
+            token, // Send token in the response
         });
     } catch (error) {
         res.status(500).json({ success: false, message: "Server Error" });

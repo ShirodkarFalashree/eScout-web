@@ -22,11 +22,16 @@ const LoginPage = () => {
     try {
       const response = await axios.post(
         "http://localhost:5000/api/v1/auth/login", // URL to the login route
-        formData
+        formData,
+        {
+          withCredentials: true, // Add this option
+        }
       );
       if (response.data.success) {
         setSuccess(true);
         setError("");
+        const { token } = response.data; // Get token from response
+        localStorage.setItem('token', token); 
         navigate("/"); // Redirect to homepage or dashboard after successful login
       }
     } catch (error) {
@@ -75,6 +80,9 @@ const LoginPage = () => {
               Login
             </button>
           </form>
+          <div className=" pl-8 text-white pt-2 opacity-70 ">
+            <p>Dont have account? <a href="/register">Create Account</a></p>
+          </div>
         </div>
       </div>
     </BackgroundGradientAnimation>

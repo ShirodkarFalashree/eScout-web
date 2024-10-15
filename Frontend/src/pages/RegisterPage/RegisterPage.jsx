@@ -29,6 +29,8 @@ const RegisterPage = () => {
       if (response.data.success) {
         setSuccess(true);
         setError("");
+        const { token } = response.data; // Get token from response
+        localStorage.setItem('token', token); 
         navigate("/");
       }
     } catch (error) {
@@ -110,6 +112,9 @@ const RegisterPage = () => {
               Register
             </button>
           </form>
+          <div className=" pl-14 text-white pt-2 opacity-70 ">
+            <p>Already have account? <a href="/login">Log in</a></p>
+          </div>
         </div>
       </div>
     </BackgroundGradientAnimation>

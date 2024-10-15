@@ -3,68 +3,101 @@ import { TextGenerateEffect } from "../../components/text-generate-effect";
 import { PiBookmarkSimpleBold } from "react-icons/pi";
 import { RxBookmarkFilled } from "react-icons/rx";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-import './ResponsePage.css';
-import { useLocation } from 'react-router-dom';
+import "react-toastify/dist/ReactToastify.css";
+import "./ResponsePage.css";
+import { useLocation } from "react-router-dom";
+import axios from "axios"; // Import axios
 
 const ResponsePage = () => {
   const [isSaved, setIsSaved] = useState(false);
   const location = useLocation();
   const response = location.state?.data?.response || "No data available";
   const [formattedSections, setFormattedSections] = useState([]);
-  const [title, setTitle] = useState("Search Results"); // Default title if not provided in the response
-  const [showAllImages, setShowAllImages] = useState(false); // State to manage visibility of all images
+  const searchQuery = location.state?.query || "No search query provided";
+  const [title, setTitle] = useState("Search Results");
+  const [showAllImages, setShowAllImages] = useState(false);
 
   useEffect(() => {
     const formattedData = formatResponse(response);
     setFormattedSections(formattedData.sections);
-    setTitle(formattedData.title || "Search Results"); // Use the first section's title if available
+    setTitle(formattedData.title || "Search Results");
   }, [response]);
 
-  const handleSaveClick = () => {
+  const handleSaveClick = async () => {
     setIsSaved((prev) => !prev);
-    toast(isSaved ? "Document removed from saved!" : "Document added to saved!", {
+    const action = isSaved ? "removed from saved" : "added to saved";
+    
+    toast(`Document ${action}!`, {
       position: "bottom-right",
-      style: { backgroundColor: '#ffffffdc', color: 'black', borderRadius: '10px' },
-      autoClose: 1500, // Automatically close after 1.5 seconds
+      style: {
+        backgroundColor: "#ffffffdc",
+        color: "black",
+        borderRadius: "10px",
+      },
+      autoClose: 1500,
       closeOnClick: false,
     });
+
+    // Call the addHistory API
+    try {
+      // const images = staticImages; // Add any relevant images you want to store
+      const body = {
+        query: searchQuery,
+        response: response
+        // images: images,
+      };
+
+      const res = await axios.post(
+        "http://localhost:5000/api/v1/history", // URL to the login route
+        body,
+        {
+          withCredentials: true, // Add this option
+        }
+      );
+
+      if (res.data.success) {
+        console.log("History added:", res.data.history); // Log success
+      }
+    } catch (error) {
+      console.error("Error saving history:", error); // Handle error
+      toast.error("Failed to save history!");
+    }
   };
 
-  // Format the response based on sections and bullet points
   const formatResponse = (responseText) => {
-    const sections = responseText.split('\n\n'); // Split by empty lines to get sections
-    const title = sections[0].split('\n')[0]; // Extract the title from the first section
-    const formattedSections = sections.map(section => {
-      const lines = section.split('\n').filter(line => line.trim() !== ''); // Split by line breaks and remove empty lines
-      const sectionTitle = lines[0]; // The first line will be the title or header of the section
-      const content = lines.slice(1).map(line => line.replace(/\*/g, '').trim()); // Remove all asterisks and trim spaces
+    const sections = responseText.split("\n\n");
+    const title = sections[0].split("\n")[0];
+    const formattedSections = sections.map((section) => {
+      const lines = section.split("\n").filter((line) => line.trim() !== "");
+      const sectionTitle = lines[0];
+      const content = lines
+        .slice(1)
+        .map((line) => line.replace(/\*/g, "").trim());
       return { title: sectionTitle, content };
     });
     return { title, sections: formattedSections };
   };
 
-  // Static object of images
   const staticImages = [
-    "https://via.placeholder.com/150", // Placeholder image 1
-    "https://via.placeholder.com/150", // Placeholder image 1
-    "https://via.placeholder.com/150", // Placeholder image 1
-    "https://via.placeholder.com/150", // Placeholder image 1
-    "https://via.placeholder.com/150/0000FF/FFFFFF?text=Image+1", // Placeholder image 2
-    "https://via.placeholder.com/150/0000FF/FFFFFF?text=Image+1", // Placeholder image 2
-    "https://via.placeholder.com/150/0000FF/FFFFFF?text=Image+1", // Placeholder image 2
-    "https://via.placeholder.com/150/0000FF/FFFFFF?text=Image+1", // Placeholder image 2
-    "https://via.placeholder.com/150/0000FF/FFFFFF?text=Image+1", // Placeholder image 2
-    "https://via.placeholder.com/150/FF0000/FFFFFF?text=Image+2", // Placeholder image 3
-    "https://via.placeholder.com/150/FF0000/FFFFFF?text=Image+2", // Placeholder image 3
+    "https://via.placeholder.com/150",
+    "https://via.placeholder.com/150",
+    "https://via.placeholder.com/150",
+    "https://via.placeholder.com/150",
+    "https://via.placeholder.com/150/0000FF/FFFFFF?text=Image+1",
+    "https://via.placeholder.com/150/0000FF/FFFFFF?text=Image+1",
+    "https://via.placeholder.com/150/0000FF/FFFFFF?text=Image+1",
+    "https://via.placeholder.com/150/0000FF/FFFFFF?text=Image+1",
+    "https://via.placeholder.com/150/0000FF/FFFFFF?text=Image+1",
+    "https://via.placeholder.com/150/FF0000/FFFFFF?text=Image+2",
+    "https://via.placeholder.com/150/FF0000/FFFFFF?text=Image+2",
   ];
 
   return (
     <div className="bg-[#0f0f0f] flex flex-col gap-6 bg-opacity-100 text-white w-full h-full p-6">
       <div className="relative bg-white bg-opacity-5 flex items-center h-14 w-full rounded-xl text-xl">
-        <p className="w-full text-center">{title}</p> {/* Dynamic Title */}
+        <p className="w-full text-center">{searchQuery}</p>
         <div
-          className="absolute right-4 text-white text-3xl w-1 h-16 flex items-center justify-end rounded-full cursor-pointer"
+          className="absolute right-4 text-white text-3xl w-10 h-16 flex items-center justify-end rounded-full cursor-pointer"
           onClick={handleSaveClick}
         >
           {isSaved ? <RxBookmarkFilled /> : <PiBookmarkSimpleBold />}
@@ -75,15 +108,17 @@ const ResponsePage = () => {
       <div>
         <h2 className="text-2xl font-bold mb-4">Related Images</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-  {staticImages.slice(0, showAllImages ? staticImages.length : 4).map((image, index) => (
-    <img
-      key={index}
-      src={image}
-      alt={`Static Image ${index + 1}`}
-      className="w-full h-auto rounded"
-    />
-  ))}
-</div>
+          {staticImages
+            .slice(0, showAllImages ? staticImages.length : 4)
+            .map((image, index) => (
+              <img
+                key={index}
+                src={image}
+                alt={`Static Image ${index + 1}`}
+                className="w-full h-auto rounded"
+              />
+            ))}
+        </div>
 
         {staticImages.length > 4 && (
           <button
@@ -99,9 +134,7 @@ const ResponsePage = () => {
       <div className="flex flex-col gap-6">
         {formattedSections.map((section, index) => (
           <div key={index}>
-            {/* Display the section title */}
             <h2 className="text-2xl font-bold mb-4">{section.title}</h2>
-            {/* Display the section content */}
             <ul className="ml-6 list-disc text-sm">
               {section.content.map((line, idx) => (
                 <li key={idx}>

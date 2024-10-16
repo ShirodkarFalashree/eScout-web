@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BackgroundGradientAnimation } from "../../components/Background";
 import { AnimatedList } from "../../components/AnimatedList";
+import axios from "axios";
 
 const items = [
   <div
@@ -46,49 +47,52 @@ const items = [
 const SavedPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [history, setHistory] = useState([]);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
 
-  useEffect(async () => {
-    const token = localStorage.getItem("token"); // Check token in localStorage
-    console.log("Token found:", token); // Debugging log
+  useEffect(() => {
+    const fetchData = async () => {
+        const token = localStorage.getItem("token"); // Check token in localStorage
+        console.log("Token found:", token); // Debugging log
 
-    if (!token) {
-      console.log("No token found. Redirecting to login.");
-      navigate("/login");
-    } else {
-      console.log("Token exists. Staying on SavedPage.");
-      setLoading(false);
-    }
-
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/api/v1/history", // URL to the login route
-        {
-          withCredentials: true, // Add this option
+        if (!token) {
+            console.log("No token found. Redirecting to login.");
+            navigate("/login");
+            return;
+        } else {
+            console.log("Token exists. Staying on SavedPage.");
+            setLoading(false);
         }
-      );
-      if (response.data.success) {
-        setSuccess(true);
-        setError("");
-        const { token } = response.data; // Get token from response
-        localStorage.setItem("token", token);
-        navigate("/"); // Redirect to homepage or dashboard after successful login
-      }
-      const historyResponse = await axios.get(
-        "http://localhost:5000/api/v1/history", // URL to the history route
-        { withCredentials: true } // Add this option
-      );
 
-      if (historyResponse.data.success) {
-        setHistory(historyResponse.data.history); // Store history in state
-      } else {
-        console.error("Failed to fetch history");
-      }
-    } catch (error) {
-      console.error(error);
-      setError(error.response?.data?.message || "Login Failed");
-      setSuccess(false);
-    }
-  }, [navigate]);
+        try {
+            // Add the token in the Authorization header
+            const historyResponse = await axios.get(
+                "http://localhost:5000/api/v1/history",
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`, // Include token here
+                    },
+                    withCredentials: true,
+                }
+            );
+
+            if (historyResponse.data.success) {
+                setHistory(historyResponse.data.history); // Store history in state
+                console.log(historyResponse.data.history);                
+            } else {
+                console.error("Failed to fetch history");
+            }
+        } catch (error) {
+            console.error(error);
+            setError(error.response?.data?.message || "An error occurred");
+            setSuccess(false);
+        }
+    };
+
+    fetchData();
+}, [navigate]);
+
 
   // Display nothing while loading to prevent a flicker before redirect
   if (loading) {

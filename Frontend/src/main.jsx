@@ -11,6 +11,7 @@ import SavedPage from './pages/SavedPage/SavedPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import ResponsePage from './pages/ResponsePage/ResponsePage';
+import SingleHistory from './pages/History.js/SingleHistory';
 
 
 
@@ -41,6 +42,11 @@ const routes = [
     path: '/saved',
     element: <SavedPage />,
   },
+  {
+    path: '/response/:historyId',
+    element: <SingleHistory />,
+  },
+ 
 ];
 
 // Main component with routing

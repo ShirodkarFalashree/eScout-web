@@ -13,6 +13,7 @@ import RegisterPage from './pages/RegisterPage/RegisterPage';
 import ResponsePage from './pages/ResponsePage/ResponsePage';
 
 
+
 // Define routes object
 const routes = [
   {
@@ -23,6 +24,7 @@ const routes = [
     path: '/response',
     element: <ResponsePage />,
   },
+  
   {
     path: '/login',
     element: <LoginPage />,

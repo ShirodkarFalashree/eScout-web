@@ -16,11 +16,17 @@ const ResponsePage = () => {
   const searchQuery = location.state?.query || "No search query provided";
   const [title, setTitle] = useState("Search Results");
   const [showAllImages, setShowAllImages] = useState(false);
+  const [images, setImages] = useState([]); // New state for images
 
   useEffect(() => {
     const formattedData = formatResponse(response);
     setFormattedSections(formattedData.sections);
     setTitle(formattedData.title || "Search Results");
+
+    // Check if images are present and set them
+    if (formattedData.images && formattedData.images.length > 0) {
+      setImages(formattedData.images);
+    }
   }, [response]);
 
   const handleSaveClick = async () => {
@@ -40,11 +46,9 @@ const ResponsePage = () => {
 
     // Call the addHistory API
     try {
-      // const images = staticImages; // Add any relevant images you want to store
       const body = {
         query: searchQuery,
         response: response
-        // images: images,
       };
 
       const res = await axios.post(
@@ -75,22 +79,12 @@ const ResponsePage = () => {
         .map((line) => line.replace(/\*/g, "").trim());
       return { title: sectionTitle, content };
     });
-    return { title, sections: formattedSections };
-  };
 
-  const staticImages = [
-    "https://via.placeholder.com/150",
-    "https://via.placeholder.com/150",
-    "https://via.placeholder.com/150",
-    "https://via.placeholder.com/150",
-    "https://via.placeholder.com/150/0000FF/FFFFFF?text=Image+1",
-    "https://via.placeholder.com/150/0000FF/FFFFFF?text=Image+1",
-    "https://via.placeholder.com/150/0000FF/FFFFFF?text=Image+1",
-    "https://via.placeholder.com/150/0000FF/FFFFFF?text=Image+1",
-    "https://via.placeholder.com/150/0000FF/FFFFFF?text=Image+1",
-    "https://via.placeholder.com/150/FF0000/FFFFFF?text=Image+2",
-    "https://via.placeholder.com/150/FF0000/FFFFFF?text=Image+2",
-  ];
+    // Assuming images are included in the response, you can extract them
+    const images = responseText.match(/https?:\/\/[^\s]+(?:jpg|jpeg|png|gif)/g) || []; // Regex to find image URLs
+
+    return { title, sections: formattedSections, images }; // Include images in the return object
+  };
 
   return (
     <div className="bg-[#0f0f0f] flex flex-col gap-6 bg-opacity-100 text-white w-full h-full p-6">
@@ -104,31 +98,33 @@ const ResponsePage = () => {
         </div>
       </div>
 
-      {/* Static Images Section */}
-      <div>
-        <h2 className="text-2xl font-bold mb-4">Related Images</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-          {staticImages
-            .slice(0, showAllImages ? staticImages.length : 4)
-            .map((image, index) => (
-              <img
-                key={index}
-                src={image}
-                alt={`Static Image ${index + 1}`}
-                className="w-full h-auto rounded"
-              />
-            ))}
-        </div>
+      {/* Related Images Section */}
+      {images.length > 0 && (
+        <div>
+          <h2 className="text-2xl font-bold mb-4">Related Images</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+            {images
+              .slice(0, showAllImages ? images.length : 4)
+              .map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt={`Image ${index + 1}`} // Corrected alt syntax
+                  className="w-full h-auto rounded"
+                />
+              ))}
+          </div>
 
-        {staticImages.length > 4 && (
-          <button
-            onClick={() => setShowAllImages(!showAllImages)}
-            className="mt-2 text-blue-500 hover:underline"
-          >
-            {showAllImages ? "Show less images" : "Show all images"}
-          </button>
-        )}
-      </div>
+          {images.length > 4 && (
+            <button
+              onClick={() => setShowAllImages(!showAllImages)}
+              className="mt-2 text-blue-500 hover:underline"
+            >
+              {showAllImages ? "Show less images" : "Show all images"}
+            </button>
+          )}
+        </div>
+      )}
 
       {/* Display the API response in a formatted way */}
       <div className="flex flex-col gap-6">

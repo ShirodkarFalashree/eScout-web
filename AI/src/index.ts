@@ -80,11 +80,12 @@ const crawl = async ({ url }: { url: string }) => {
 };
 
 crawl({
-  // url: "https://www.geeksforgeeks.org/django-tutorial/"
-  // url: "https://www.betterhealth.vic.gov.au/yoga-health-benefits"
-  url: "https://en.wikipedia.org/wiki/Yoga"
-  // url: "https://cn-info.vercel.app/"
-  // url: "https://www.geeksforgeeks.org/what-is-computer-networking/"
+  // url: "https://www.indianhealthyrecipes.com/soft-idli-recipe-using-idli-rava/"
+  url: "https://en.wikipedia.org/wiki/Idli"
+  // url: "https://www.rishikulyogshalarishikesh.com/blog/health-benefits-of-yoga/"
+  // url: "https://bbc.com/news"
+  // url: "https://aws.amazon.com/what-is/java/#:~:text=Java%20is%20a%20multi%2Dplatform,applications%20and%20server%2Dside%20technologies."
+
 }).catch(error => {
   console.error("Unhandled error in crawl function:", error);
 });

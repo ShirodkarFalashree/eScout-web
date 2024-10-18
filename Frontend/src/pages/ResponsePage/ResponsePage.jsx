@@ -87,6 +87,7 @@ const ResponsePage = () => {
   };
 
   return (
+    <div className="bg-[#0f0f0f] min-h-screen">
     <div className="bg-[#0f0f0f] flex flex-col gap-6 bg-opacity-100 text-white w-full h-full p-6">
       <div className="relative bg-white bg-opacity-5 flex items-center h-14 w-full rounded-xl text-xl">
         <p className="w-full text-center">{searchQuery}</p>
@@ -143,6 +144,7 @@ const ResponsePage = () => {
       </div>
 
       <ToastContainer className="custom-toast-container" />
+    </div>
     </div>
   );
 };

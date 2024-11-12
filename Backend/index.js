@@ -13,7 +13,7 @@ connectDB();
 const app = express();
 // app.use(cors())
 app.use(cors({
-    origin: 'https://resilient-cactus-49097b.netlify.app/', // Your frontend URL
+    origin: 'https://resilient-cactus-49097b.netlify.app', // Your frontend URL
     credentials: true, // Allow credentials (cookies) to be included
 }));
 

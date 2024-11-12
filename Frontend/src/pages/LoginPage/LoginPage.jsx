@@ -36,9 +36,16 @@ const LoginPage = () => {
         setSuccess(true);
         setError("");
         const { token } = response.data; // Get token from response
-        localStorage.setItem('token', token); 
+    
+        // Set token in localStorage
+        localStorage.setItem('token', token);
+    
+        // Set token in cookies
+        document.cookie = `token=${token}; path=/; secure; HttpOnly;`;
+    
         navigate("/"); // Redirect to homepage or dashboard after successful login
-      }
+    }
+    
     } catch (error) {
       console.error(error);
       setError(error.response?.data?.message || "Login Failed");

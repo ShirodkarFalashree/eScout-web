@@ -8,9 +8,9 @@ import axios from "axios";
 
 const SearchPage = () => {
   const [isClicked, setIsClicked] = useState(false);
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState(""); // State for storing search query
+  const navigate = useNavigate();
 
   const handleInputClick = () => {
     setIsClicked(true);
@@ -23,20 +23,31 @@ const SearchPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!searchQuery.trim()) {
+      alert("Please enter a valid search query.");
+      return;
+    }
+
     // Navigate to the crawling page before starting the API call
     navigate("/crawling");
 
     try {
       setLoading(true);
-      const resultText = await axios.post("http://localhost:3000/summarize");
+
+      // Make POST request to the backend with the search query
+      const resultText = await axios.post("http://localhost:3000/summarize", {
+        query: searchQuery, // Pass the search query as a payload
+      });
+
       setLoading(false);
 
-      if (resultText) {
-        console.log(resultText.data.response);
-        console.log(resultText);
+      if (resultText && resultText.data) {
+        console.log("Summary:", resultText.data.response);
+        console.log("Title:", resultText.data.title);
+        console.log("Images:", resultText.data.images);
       }
 
-      // After the data is fetched, navigate to the response page
+      // Navigate to the response page with the data and query
       navigate("/response", {
         state: {
           data: resultText.data,
@@ -45,7 +56,8 @@ const SearchPage = () => {
       });
     } catch (error) {
       setLoading(false);
-      console.log(error);
+      console.error("Error fetching the summary:", error);
+      alert("An error occurred while fetching the summary. Please try again.");
     }
   };
 
@@ -59,21 +71,18 @@ const SearchPage = () => {
         }  bg-white bg-blur-xl p-4 pt-8 rounded-3xl w-[calc(110vw-30px)] shadow-lg justify-end absolute left-1/2 transform -translate-x-1/2 mb-5 z-10 transition-all duration-500`}
       >
         <div className="search-container flex items-center justify-end relative w-[90vw] max-w-2xl mx-auto">
-          {loading ? (
-            <PlaceholdersAndVanishInput
-              placeholders={["Loading please wait"]}
-              onChange={handleChange}
-              onSubmit={handleSubmit}
-              onClick={handleInputClick}
-            />
-          ) : (
-            <PlaceholdersAndVanishInput
-              placeholders={["Type here to search", "Search here.."]}
-              onChange={handleChange}
-              onSubmit={handleSubmit}
-              onClick={handleInputClick}
-            />
-          )}
+          <PlaceholdersAndVanishInput
+            placeholders={
+              loading
+                ? ["Loading, please wait..."]
+                : ["Type here to search", "Search here..."]
+            }
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+            onClick={handleInputClick}
+            value={searchQuery} // Ensure the input reflects the current state
+            disabled={loading} // Disable input when loading
+          />
         </div>
         <div className="relative -bottom-[280px] left-[286px]">
           <Link to="/saved">

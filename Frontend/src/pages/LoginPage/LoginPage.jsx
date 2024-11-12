@@ -17,6 +17,11 @@ const LoginPage = () => {
     setFormData({ ...formData, [id]: value });
   };
 
+  const regClick = (e) => {
+    e.preventDefault();
+    navigate("/register")
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -81,7 +86,7 @@ const LoginPage = () => {
             </button>
           </form>
           <div className=" pl-8 text-white pt-2 opacity-70 ">
-            <p>Dont have account? <a href="/register">Create Account</a></p>
+            <p>Dont have account? <span onClick={regClick} >Create Account</span></p>
           </div>
         </div>
       </div>

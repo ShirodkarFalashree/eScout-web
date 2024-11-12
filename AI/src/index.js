@@ -14,10 +14,16 @@ const queryToUrlMap = {
   news: "https://bbc.com/news",
 };
 
-// Function to get a URL based on a query
+// Function to get a URL based on keywords found in the query
 const getUrlFromQuery = (query) => {
   query = query.toLowerCase();
-  return queryToUrlMap[query] || null;
+  // Search for a keyword in the sentence that matches a key in queryToUrlMap
+  for (const keyword in queryToUrlMap) {
+    if (query.includes(keyword)) {
+      return queryToUrlMap[keyword];
+    }
+  }
+  return null;
 };
 
 // Crawl function remains the same

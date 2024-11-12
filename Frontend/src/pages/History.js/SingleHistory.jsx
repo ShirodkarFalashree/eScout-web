@@ -22,7 +22,7 @@ const SingleHistory = () => {
 
             try {
                 const response = await axios.get(
-                    `http://localhost:5000/api/v1/history/${historyId}`,
+                    `https://escout-web-1.onrender.com/api/v1/history/${historyId}`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,

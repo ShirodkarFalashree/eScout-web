@@ -52,7 +52,7 @@ const ResponsePage = () => {
       };
 
       const res = await axios.post(
-        "http://localhost:5000/api/v1/history", // URL to the login route
+        "https://escout-web-1.onrender.com/api/v1/history", // URL to the login route
         body,
         {
           withCredentials: true, // Add this option

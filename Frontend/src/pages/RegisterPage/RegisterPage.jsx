@@ -22,7 +22,7 @@ const RegisterPage = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/auth/register",
+        "https://escout-web-1.onrender.com/api/v1/auth/register",
         formData,
         
       );
@@ -30,9 +30,17 @@ const RegisterPage = () => {
         setSuccess(true);
         setError("");
         const { token } = response.data; // Get token from response
-        localStorage.setItem('token', token); 
+    
+        // Store the token in localStorage
+        localStorage.setItem('token', token);
+    
+        // Store the token in cookies
+        document.cookie = `token=${token}; path=/; secure; SameSite=Strict;`;
+    
+        // Navigate to the desired page after successful login
         navigate("/");
-      }
+    }
+    
     } catch (error) {
       console.error(error);
       console.log(error.message);

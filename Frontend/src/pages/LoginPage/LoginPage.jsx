@@ -17,11 +17,16 @@ const LoginPage = () => {
     setFormData({ ...formData, [id]: value });
   };
 
+  const regClick = (e) => {
+    e.preventDefault();
+    navigate("/register")
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/auth/login", // URL to the login route
+        "https://escout-web-1.onrender.com/api/v1/auth/login", // URL to the login route
         formData,
         {
           withCredentials: true, // Add this option
@@ -31,9 +36,16 @@ const LoginPage = () => {
         setSuccess(true);
         setError("");
         const { token } = response.data; // Get token from response
-        localStorage.setItem('token', token); 
+    
+        // Set token in localStorage
+        localStorage.setItem('token', token);
+    
+        // Set token in cookies
+        document.cookie = `token=${token}; path=/; secure; HttpOnly;`;
+    
         navigate("/"); // Redirect to homepage or dashboard after successful login
-      }
+    }
+    
     } catch (error) {
       console.error(error);
       setError(error.response?.data?.message || "Login Failed");
@@ -81,7 +93,7 @@ const LoginPage = () => {
             </button>
           </form>
           <div className=" pl-8 text-white pt-2 opacity-70 ">
-            <p>Dont have account? <a href="/register">Create Account</a></p>
+            <p>Dont have account? <span onClick={regClick} >Create Account</span></p>
           </div>
         </div>
       </div>

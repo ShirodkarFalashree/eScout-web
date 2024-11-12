@@ -21,7 +21,7 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/auth/login", // URL to the login route
+        "https://escout-web-1.onrender.com/api/v1/auth/login", // URL to the login route
         formData,
         {
           withCredentials: true, // Add this option

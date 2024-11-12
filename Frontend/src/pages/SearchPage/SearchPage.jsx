@@ -35,7 +35,8 @@ const SearchPage = () => {
       setLoading(true);
 
       // Make POST request to the backend with the search query
-      const resultText = await axios.post("https://escout-web-2.onrender.com/summarize", {
+      const resultText = await axios.post("http://localhost:3000/summarize", {
+      // const resultText = await axios.post("https://escout-web-2.onrender.com/summarize", {
         query: searchQuery, // Pass the search query as a payload
       });
 

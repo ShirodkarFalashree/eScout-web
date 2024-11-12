@@ -13,7 +13,8 @@ connectDB();
 const app = express();
 // app.use(cors())
 app.use(cors({
-    origin: 'https://escout.netlify.app', // Your frontend URL
+    // origin: 'https://escout.netlify.app', // Your frontend URL
+    origin: 'http://localhost:5173', // Your frontend URL
     credentials: true, // Allow credentials (cookies) to be included
 }));
 

@@ -22,7 +22,7 @@ const RegisterPage = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://escout-web-1.onrender.com/api/v1/auth/register",
+        "http://localhost:5000/api/v1/auth/register",
         formData,
         
       );

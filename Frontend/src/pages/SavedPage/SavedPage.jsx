@@ -23,7 +23,7 @@ const SavedPage = () => {
 
       try {
         const historyResponse = await axios.get(
-          "https://escout-web-1.onrender.com/api/v1/history",
+          "http://localhost:5000/api/v1/history",
           {
             headers: {
               Authorization: `Bearer ${token}`,

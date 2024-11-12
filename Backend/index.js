@@ -13,7 +13,7 @@ connectDB();
 const app = express();
 // app.use(cors())
 app.use(cors({
-    origin: 'https://funny-wisp-8507f6.netlify.app', // Your frontend URL
+    origin: 'https://escout.netlify.app', // Your frontend URL
     credentials: true, // Allow credentials (cookies) to be included
 }));
 

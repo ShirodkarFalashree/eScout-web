@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BackgroundGradientAnimation } from "../../components/Background";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -10,8 +10,13 @@ const RegisterPage = () => {
     password: "",
   });
   const navigate = useNavigate();
+  const location = useLocation();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+
+  // Save the redirect path
+  const redirectPath =
+    localStorage.getItem("redirectPath") || location.state?.from || "/";
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -23,27 +28,26 @@ const RegisterPage = () => {
     try {
       const response = await axios.post(
         "http://localhost:5000/api/v1/auth/register",
-        formData,
-        
+        formData
       );
       if (response.data.success) {
         setSuccess(true);
         setError("");
+
         const { token } = response.data; // Get token from response
-    
+
         // Store the token in localStorage
-        localStorage.setItem('token', token);
-    
+        localStorage.setItem("token", token);
+
         // Store the token in cookies
         document.cookie = `token=${token}; path=/; secure; SameSite=Strict;`;
-    
-        // Navigate to the desired page after successful login
-        navigate("/");
-    }
-    
+
+        // Clear the redirect path from localStorage and navigate
+        localStorage.removeItem("redirectPath");
+        navigate(redirectPath);
+      }
     } catch (error) {
       console.error(error);
-      console.log(error.message);
       setError(error.response?.data?.message || "Registration Failed");
       setSuccess(false);
     }
@@ -121,7 +125,9 @@ const RegisterPage = () => {
             </button>
           </form>
           <div className=" pl-14 text-white pt-2 opacity-70 ">
-            <p>Already have account? <a href="/login">Log in</a></p>
+            <p>
+              Already have an account? <a href="/login">Log in</a>
+            </p>
           </div>
         </div>
       </div>

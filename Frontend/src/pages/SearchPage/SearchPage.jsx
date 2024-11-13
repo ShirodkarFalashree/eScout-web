@@ -19,10 +19,13 @@ const SearchPage = () => {
       try {
         const token = localStorage.getItem("token");
         if (token) {
-          const response = await axios.get("http://localhost:5000/api/v1/history", {
-            headers: { Authorization: `Bearer ${token}` },
-            withCredentials: true,
-          });
+          const response = await axios.get(
+            "http://localhost:5000/api/v1/history",
+            {
+              headers: { Authorization: `Bearer ${token}` },
+              withCredentials: true,
+            }
+          );
           setHistory(response.data.history || []); // Store fetched history
         }
       } catch (error) {
@@ -107,19 +110,24 @@ const SearchPage = () => {
 
         {/* Conditionally Render Saved History */}
         {isClicked && (
-          <div className="saved-history mt-8 space-y-4 overflow-y-auto max-h-64">
+          <div className="saved-history mt-8  space-y-4 overflow-y-auto max-h-64">
             {history.length > 0 ? (
-              history.map((item) => (
-                <div
-                  key={item._id}
-                  onClick={() => navigate(`/response/${item._id}`)}
-                  className="p-4 text-lg text-white bg-black/10 border-b-2 bg-blur-2xl rounded-t-lg cursor-pointer transition"
+              history
+                .slice() // Create a shallow copy to avoid mutating the original array
+                .reverse() // Reverse the order of items
+                .map((item) => (
+                  <div
+                    key={item._id}
+                    onClick={() => navigate(`/response/${item._id}`)}
+                    className="p-4 text-lg text-white bg-black/10 border-b-2 bg-blur-2xl rounded-t-lg cursor-pointer transition"
                   >
-                  {item.query} {/* Display query as saved item */}
-                </div>
-              ))
+                    {item.query} {/* Display query as saved item */}
+                  </div>
+                ))
             ) : (
-              <div className="text-center text-gray-500">No saved history available.</div>
+              <div className="text-center text-gray-500">
+                No saved history available.
+              </div>
             )}
           </div>
         )}

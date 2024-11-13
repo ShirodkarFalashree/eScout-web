@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BackgroundGradientAnimation } from "../../components/Background";
 import { PlaceholdersAndVanishInput } from "../../components/InputBox";
 import { useNavigate } from "react-router-dom";
@@ -9,50 +9,63 @@ import axios from "axios";
 const SearchPage = () => {
   const [isClicked, setIsClicked] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(""); // State for storing search query
+  const [searchQuery, setSearchQuery] = useState("");
+  const [history, setHistory] = useState([]); // State to hold saved history
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // Fetch saved history when component mounts
+    const fetchHistory = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (token) {
+          const response = await axios.get("http://localhost:5000/api/v1/history", {
+            headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true,
+          });
+          setHistory(response.data.history || []); // Store fetched history
+        }
+      } catch (error) {
+        console.error("Error fetching history:", error);
+      }
+    };
+
+    fetchHistory();
+  }, []);
+
   const handleInputClick = () => {
-    setIsClicked(true);
+    setIsClicked(true); // Set clicked state to true
   };
 
   const handleChange = (e) => {
-    setSearchQuery(e.target.value); // Update the search query as the user types
+    setSearchQuery(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!searchQuery.trim()) {
       alert("Please enter a valid search query.");
       return;
     }
 
-    // Navigate to the crawling page before starting the API call
     navigate("/crawling");
-
     try {
       setLoading(true);
-
-      // Make POST request to the backend with the search query
       const resultText = await axios.post("http://localhost:3000/summarize", {
-      // const resultText = await axios.post("https://escout-web-2.onrender.com/summarize", {
-        query: searchQuery, // Pass the search query as a payload
+        query: searchQuery,
       });
 
       setLoading(false);
-
       if (resultText && resultText.data) {
         console.log("Summary:", resultText.data.response);
         console.log("Title:", resultText.data.title);
         console.log("Images:", resultText.data.images);
       }
 
-      // Navigate to the response page with the data and query
       navigate("/response", {
         state: {
           data: resultText.data,
-          query: searchQuery, // Pass the search query as state
+          query: searchQuery,
         },
       });
     } catch (error) {
@@ -71,7 +84,8 @@ const SearchPage = () => {
             : "h-[calc(81vh)] -bottom-[calc(60vh)] bg-opacity-0"
         }  bg-white bg-blur-xl p-4 pt-8 rounded-3xl w-[calc(110vw-30px)] shadow-lg justify-end absolute left-1/2 transform -translate-x-1/2 mb-5 z-10 transition-all duration-500`}
       >
-        <div className="search-container flex items-center justify-end relative w-[90vw] max-w-2xl mx-auto">
+        {/* Search Input and Bookmark Icon */}
+        <div className="search-container flex items-center justify-center space-x-4 relative w-[90vw] max-w-2xl mx-auto">
           <PlaceholdersAndVanishInput
             placeholders={
               loading
@@ -81,17 +95,34 @@ const SearchPage = () => {
             onChange={handleChange}
             onSubmit={handleSubmit}
             onClick={handleInputClick}
-            value={searchQuery} // Ensure the input reflects the current state
-            disabled={loading} // Disable input when loading
+            value={searchQuery}
+            disabled={loading}
           />
-        </div>
-        <div className="relative -bottom-[280px] left-[286px]">
-          <Link to="/saved">
-            <div className="bg-white text-black text-3xl w-16 h-16 flex items-center justify-center rounded-full">
+          {/* <Link to="/saved">
+            <div className="bg-white text-black text-3xl w-12 h-12 flex items-center justify-center rounded-full shadow-md">
               <PiBookmarkSimpleBold />
             </div>
-          </Link>
+          </Link> */}
         </div>
+
+        {/* Conditionally Render Saved History */}
+        {isClicked && (
+          <div className="saved-history mt-8 space-y-4 overflow-y-auto max-h-64">
+            {history.length > 0 ? (
+              history.map((item) => (
+                <div
+                  key={item._id}
+                  onClick={() => navigate(`/response/${item._id}`)}
+                  className="p-4 text-lg text-white bg-black/10 border-b-2 bg-blur-2xl rounded-t-lg cursor-pointer transition"
+                  >
+                  {item.query} {/* Display query as saved item */}
+                </div>
+              ))
+            ) : (
+              <div className="text-center text-gray-500">No saved history available.</div>
+            )}
+          </div>
+        )}
       </div>
     </BackgroundGradientAnimation>
   );

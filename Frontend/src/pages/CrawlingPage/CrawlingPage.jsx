@@ -4,13 +4,11 @@ import { MultiStepLoader as Loader } from "../../components/multi-step-loader";
 import { BackgroundGradientAnimation } from "../../components/Background";
 
 const loadingStates = [
-  { text: "Verywell Health" },
-  { text: "Yoga Journal" },
-  { text: "Healthline" },
-  { text: "Mayo Clinic" },
-  { text: "WebMD" },
-  { text: "Yoga International" },
-  { text: "Medical News Today" },
+  { text: "Crawling sites" },
+  { text: "Scrapping data" },
+  { text: "Summarizing the data" },
+  { text: "formatting data " },
+  
 ];
 
 export default function MultiStepLoaderDemo() {

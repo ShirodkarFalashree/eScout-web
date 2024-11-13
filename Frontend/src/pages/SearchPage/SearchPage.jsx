@@ -107,7 +107,7 @@ const SearchPage = () => {
 
         {/* Conditionally Render Saved History */}
         {isClicked && (
-          <div className="saved-history mt-8 space-y-4 overflow-y-auto max-h-64">
+          <div className="saved-history mt-8 space-y-4 overflow-y-auto max-h-96">
             {history.length > 0 ? (
               history.map((item) => (
                 <div

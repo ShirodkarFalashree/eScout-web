@@ -83,7 +83,7 @@ const SearchPage = () => {
   return (
     <BackgroundGradientAnimation>
       {/* Transparent Navbar */}
-      <nav className="fixed top-0 left-0 w-full flex items-center justify-between px-4 md:px-8 py-4 bg-black/30 backdrop-blur-sm text-white z-50">
+      <nav className="fixed top-0 left-0 w-full flex items-center justify-between px-4 md:px-8 py-4 bg-transparent backdrop-blur-sm text-white z-50">
         <div className="flex items-center">
           <Link to="/" className="text-2xl font-bold">
             Logo
@@ -118,7 +118,7 @@ const SearchPage = () => {
           </button>
         </div>
         {isMenuOpen && (
-          <div className="absolute top-16 left-0 w-full bg-black/50 p-4 flex flex-col space-y-4 md:hidden">
+          <div className="absolute top-16 left-0 w-full bg-tranparent p-4 flex flex-col space-y-4 md:hidden">
             <button
               className="text-white hover:underline transition"
               onClick={() => {
@@ -179,7 +179,7 @@ const SearchPage = () => {
                   <div
                     key={item._id}
                     onClick={() => navigate(`/response/${item._id}`)}
-                    className="p-4 text-lg text-white bg-black/10 border-b-2 bg-blur-2xl rounded-t-lg cursor-pointer transition"
+                    className="p-4 text-lg text-white bg-transparent border-b-2 bg-blur-2xl rounded-t-lg cursor-pointer transition"
                   >
                     {item.query}
                   </div>

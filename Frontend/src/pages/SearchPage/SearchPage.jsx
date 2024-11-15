@@ -91,7 +91,7 @@ const SearchPage = () => {
         </div>
         <div className="hidden md:flex items-center space-x-8">
           <button
-            className="text-white hover:underline transition"
+            className="text-white text-2xl hover:underline transition"
             onClick={() => navigate("/about")}
           >
             About Us
@@ -118,9 +118,9 @@ const SearchPage = () => {
           </button>
         </div>
         {isMenuOpen && (
-          <div className="absolute top-16 left-0 w-full bg-tranparent p-4 flex flex-col space-y-4 md:hidden">
+          <div className="absolute top-16 left-0 w-full  bg-tranparent p-4 flex flex-col space-y-4 md:hidden">
             <button
-              className="text-white hover:underline transition"
+              className="text-white hover:underline ml-[278px] text-xl transition"
               onClick={() => {
                 navigate("/about");
                 setIsMenuOpen(false);
@@ -129,7 +129,7 @@ const SearchPage = () => {
               About Us
             </button>
             <button
-              className="text-white hover:underline transition"
+              className="text-white text-xl ml-[240px]  hover:underline transition"
               onClick={() => {
                 navigate("/how-it-works");
                 setIsMenuOpen(false);
@@ -138,7 +138,7 @@ const SearchPage = () => {
               How It Works
             </button>
             <button
-            className="text-white hover:underline transition"
+            className="text-white text-xl ml-[240px] hover:underline transition"
             onClick={() => navigate("/saved")}
           >
            Saved by You  

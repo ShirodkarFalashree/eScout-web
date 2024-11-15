@@ -86,7 +86,7 @@ const SearchPage = () => {
       <nav className="fixed top-0 left-0 w-full flex items-center justify-between px-4 md:px-8 py-4 bg-transparent backdrop-blur-sm text-white z-50">
         <div className="flex items-center">
           <Link to="/" className="text-2xl font-bold">
-            Logo
+            eScout
           </Link>
         </div>
         <div className="hidden md:flex items-center space-x-8">

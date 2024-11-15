@@ -12,6 +12,8 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import ResponsePage from './pages/ResponsePage/ResponsePage';
 import SingleHistory from './pages/History.js/SingleHistory';
+import About from './pages/About/About';
+import Working from './pages/Working/Working';
 
 
 
@@ -46,6 +48,15 @@ const routes = [
     path: '/response/:historyId',
     element: <SingleHistory />,
   },
+  {
+    path:'/about',
+    element:<About/>
+  },
+  {
+    path:'/how-it-works',
+    element:<Working/>
+  },
+
  
 ];
 

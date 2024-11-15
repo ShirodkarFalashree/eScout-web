@@ -67,7 +67,7 @@ const SavedPage = () => {
           {history.map((item) => (
             <div
               key={item._id}
-              className="p-4 py-8 text-white text-2xl bg-gray-200 bg-opacity-35 border border-1 rounded-3xl z-50 mx-2 cursor-pointer"
+              className="p-4 mt-3 py-8 text-white text-2xl bg-gray-200 bg-opacity-35 border border-1 rounded-3xl z-50 mx-2 cursor-pointer"
               onClick={() => handleItemClick(item._id)} // Navigate to the specific response
             >
               {item.query} {/* Display the query as the title */}

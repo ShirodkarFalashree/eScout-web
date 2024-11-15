@@ -100,7 +100,13 @@ const SearchPage = () => {
             className="text-white hover:underline transition"
             onClick={() => navigate("/how-it-works")}
           >
-            How It Works
+            How to use 
+          </button>
+          <button
+            className="text-white hover:underline transition"
+            onClick={() => navigate("/saved")}
+          >
+           Saved by You  
           </button>
         </div>
         <div className="md:hidden">
@@ -131,6 +137,12 @@ const SearchPage = () => {
             >
               How It Works
             </button>
+            <button
+            className="text-white hover:underline transition"
+            onClick={() => navigate("/saved")}
+          >
+           Saved by You  
+          </button>
           </div>
         )}
       </nav>

@@ -83,7 +83,7 @@ const SearchPage = () => {
   return (
     <BackgroundGradientAnimation>
       {/* Transparent Navbar */}
-      <nav className="fixed top-0 left-0 w-full flex items-center justify-between px-4 md:px-8 py-4 bg-white/10 shadow-md shadow-white text-white z-50 backdrop-blur-3xl">
+      <nav className="fixed top-0 left-0 w-full flex items-center justify-between px-4 md:px-8 py-4 bg-white/10 shadow-md shadow-white/10 text-white z-50 backdrop-blur-3xl">
       <div className="flex items-center">
           <Link to="/" className="text-2xl font-bold">
             eScout
@@ -170,7 +170,7 @@ const SearchPage = () => {
         </div>
 
         {isClicked && (
-          <div className="saved-history mt-8 space-y-4 overflow-y-auto max-h-96">
+          <div className="saved-history mt-8 space-y-4 overflow-y-auto max-h-96  ">
             {history.length > 0 ? (
               history
                 .slice()
@@ -179,13 +179,13 @@ const SearchPage = () => {
                   <div
                     key={item._id}
                     onClick={() => navigate(`/response/${item._id}`)}
-                    className="p-4 text-lg text-white bg-transparent border-b-2 bg-blur-2xl rounded-t-lg cursor-pointer transition"
+                    className="p-4 text-lg w-[1080px] mx-auto  text-white bg-transparent border-b-2 bg-blur-2xl rounded-t-lg cursor-pointer transition"
                   >
                     {item.query}
                   </div>
                 ))
             ) : (
-              <div className="text-center text-gray-500">
+              <div className="w-[1080px] mx-auto   text-center text-gray-500">
                 No saved history available.
               </div>
             )}

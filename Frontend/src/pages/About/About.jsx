@@ -61,7 +61,7 @@ const About = () => {
       {/* How We Came Up With This Idea */}
       <div className="py-16 bg-gray-800 px-6">
         <h2 className="text-3xl md:text-4xl font-semibold text-center mb-8 text-white">
-          How We Came Up With This Idea
+          How We Came Up With This Ideas
         </h2>
         <div className="text-lg max-w-4xl mx-auto space-y-4">
           <p>

@@ -91,7 +91,7 @@ const SearchPage = () => {
         </div>
         <div className="hidden md:flex items-center space-x-8">
           <button
-            className="text-white text-2xl hover:underline transition"
+            className="text-white hover:underline transition"
             onClick={() => navigate("/about")}
           >
             About Us

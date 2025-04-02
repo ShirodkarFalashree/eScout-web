@@ -149,7 +149,7 @@ const SearchPage = () => {
           Listening...
         </div>
       )}
-
+      <h1 className="text-white z-50 mt-28  text-[28px] md:text-4xl p-12 text-center">The <span className="font-extrabold">fastest</span>  and <span className="font-extrabold">cleanest</span> <br /> way to browse </h1>
       <div
         className={`outer-div ${
           isClicked ? "h-[calc(80vh)] -bottom-[calc(20vh)] bg-opacity-10" : "h-[calc(81vh)] -bottom-[calc(60vh)] bg-opacity-0"

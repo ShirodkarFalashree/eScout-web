@@ -14,6 +14,7 @@ import ResponsePage from './pages/ResponsePage/ResponsePage';
 import SingleHistory from './pages/History.js/SingleHistory';
 import About from './pages/About/About';
 import Working from './pages/Working/Working';
+import GetStarted from './pages/GetStarted/GetStarted';
 
 
 
@@ -31,6 +32,10 @@ const routes = [
   {
     path: '/login',
     element: <LoginPage />,
+  },
+  {
+    path: '/get-started',
+    element: <GetStarted />,
   },
   {
     path: '/register',

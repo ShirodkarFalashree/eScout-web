@@ -143,17 +143,17 @@ const SearchPage = () => {
           </div>
         )}
       </nav>
-
       {isListening && (
         <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/80 text-white p-6 rounded-xl text-lg">
           Listening...
         </div>
       )}
-      <h1 className="text-white z-50 mt-28  text-[28px] md:text-4xl p-12 text-center">The <span className="font-extrabold">fastest</span>  and <span className="font-extrabold">cleanest</span> <br /> way to browse </h1>
+
+<h1 className="text-white z-50 mt-28  text-4xl p-12 text-center">The <span className="font-extrabold">fastest</span>  and <span className="font-extrabold">cleanest</span> <br /> way to browse </h1>
       <div
         className={`outer-div ${
-          isClicked ? "h-[calc(80vh)] -bottom-[calc(20vh)] bg-opacity-10" : "h-[calc(81vh)] -bottom-[calc(60vh)] bg-opacity-0"
-        } bg-white bg-blur-xl p-4 pt-8 rounded-3xl w-[calc(110vw-30px)] shadow-lg justify-end absolute left-1/2 transform -translate-x-1/2 mb-5 z-10 transition-all duration-500`}
+          isClicked ? "h-[calc(80vh)] -bottom-[calc(20vh)] bg-opacity-30" : "h-[calc(81vh)] -bottom-[calc(60vh)] bg-opacity-0"
+        } bg-black bg-blur-xl p-4 pt-8 rounded-3xl w-[calc(110vw-30px)] shadow-lg justify-end absolute left-1/2 transform -translate-x-1/2 mb-5 z-10 transition-all duration-500`}
       >
         <div className="search-container flex items-center justify-center space-x-4 relative w-[90vw] max-w-2xl mx-auto">
           <PlaceholdersAndVanishInput
